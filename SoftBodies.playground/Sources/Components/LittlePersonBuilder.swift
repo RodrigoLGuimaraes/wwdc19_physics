@@ -6,11 +6,21 @@ public class LittlePersonBuilder {
     private var scene: SKScene?
     private var bodySize: CGSize = CGSize(width: 10, height: 10)
     private var memberSize: CGSize = CGSize(width: 10, height: 10)
+    private var backgroundColor: SKColor = SKColor.clear
+    
+    private var distance: CGFloat {
+        return self.bodySize.height/2 + self.memberSize.height/2
+    }
     
     public init() {}
     
     public func addInto(scene: SKScene) -> LittlePersonBuilder {
         self.scene = scene
+        return self
+    }
+    
+    public func with(color: SKColor) -> LittlePersonBuilder {
+        self.backgroundColor = color
         return self
     }
     
@@ -26,25 +36,17 @@ public class LittlePersonBuilder {
     
     public func build() -> SKSpriteNode {
         
-        let circle = SKSpriteNode(color: SKColor.white,
-                                  size: self.bodySize)
-        
-        circle.physicsBody = SKPhysicsBody(rectangleOf: self.bodySize)
-        circle.physicsBody?.isDynamic = true
-        circle.physicsBody?.affectedByGravity = false
-        circle.physicsBody?.mass = 4.0
-        
-        circle.position = self.calculatePosition()
-        self.scene?.addChild(circle)
+        let body = self.createBody()
+        body.position = self.calculatePosition()
+        self.scene?.addChild(body)
         
         let numberOfMembers = self.calculateNumberOfMembers()
         for memberNumber in 0..<numberOfMembers {
             
             let currentAngleBetweenBodyAndMember = (2 * CGFloat.pi / CGFloat(numberOfMembers)) * CGFloat(memberNumber)
         
-            let distance: CGFloat = self.bodySize.height + self.memberSize.height
-            let x_offset: CGFloat = distance * cos(currentAngleBetweenBodyAndMember)
-            let y_offset: CGFloat = distance * sin(currentAngleBetweenBodyAndMember)
+            let x_offset: CGFloat = 2 * distance * cos(currentAngleBetweenBodyAndMember)
+            let y_offset: CGFloat = 2 * distance * sin(currentAngleBetweenBodyAndMember)
             
             let point: SKSpriteNode = SKSpriteNode(color: UIColor.gray,
                                                    size: self.memberSize)
@@ -56,20 +58,20 @@ public class LittlePersonBuilder {
             point.physicsBody?.affectedByGravity = true
             point.physicsBody?.mass = 1/3
             
-            circle.addChild(point)
+            body.addChild(point)
             
-            let joint = SKPhysicsJointSpring.joint(withBodyA: circle.physicsBody!,
+            let joint = SKPhysicsJointSpring.joint(withBodyA: body.physicsBody!,
                                                    bodyB: point.physicsBody!,
-                                                   anchorA: circle.position,
-                                                   anchorB: circle.position + point.position)
+                                                   anchorA: body.position,
+                                                   anchorB: body.position + point.position)
             
-            joint.damping = 2.0
-            joint.frequency = 9.0
+            joint.damping = 3
+            joint.frequency = 15
             
             self.scene?.physicsWorld.add(joint)
         }
         
-        return circle
+        return body
     }
 }
 
@@ -87,10 +89,20 @@ extension LittlePersonBuilder {
     }
     
     private func calculateNumberOfMembers() -> Int {
-        let distance: CGFloat = self.bodySize.height/2 + self.memberSize.height/2
         let angleBetweenMembers = 2 * asin(self.memberSize.width/2/distance)
         let numberOfMembers = Int(2 * CGFloat.pi / angleBetweenMembers)
-        print("distance\(distance) - angleBetweenMembers\(angleBetweenMembers) - numberOfMembers\(numberOfMembers)")
         return numberOfMembers
+    }
+    
+    private func createBody() -> SKSpriteNode {
+        let body = SKSpriteNode(color: SKColor.white,
+                     size: self.bodySize)
+        
+        body.physicsBody = SKPhysicsBody(rectangleOf: self.bodySize)
+        body.physicsBody?.isDynamic = true
+        body.physicsBody?.affectedByGravity = false
+        body.physicsBody?.mass = 4.0
+        
+        return body
     }
 }

@@ -3,10 +3,9 @@ import SpriteKit
 
 public class LittlePersonBuilder {
     
-    var scene: SKScene?
-    var bodySize: CGSize = CGSize(width: 10, height: 10)
-    var memberSize: CGSize = CGSize(width: 10, height: 10)
-    var numberOfMembers: Int = 6
+    private var scene: SKScene?
+    private var bodySize: CGSize = CGSize(width: 10, height: 10)
+    private var memberSize: CGSize = CGSize(width: 10, height: 10)
     
     public init() {}
     
@@ -15,13 +14,13 @@ public class LittlePersonBuilder {
         return self
     }
     
-    public func with(bodySize: CGSize) -> LittlePersonBuilder {
-        self.bodySize = bodySize
+    public func with(bodySize: CGFloat) -> LittlePersonBuilder {
+        self.bodySize = CGSize(width: bodySize, height: bodySize)
         return self
     }
     
-    public func with(numberOfMembers: Int) -> LittlePersonBuilder {
-        self.numberOfMembers = numberOfMembers
+    public func with(memberSize: CGFloat) -> LittlePersonBuilder {
+        self.memberSize = CGSize(width: memberSize, height: memberSize)
         return self
     }
     
@@ -38,12 +37,14 @@ public class LittlePersonBuilder {
         circle.position = self.calculatePosition()
         self.scene?.addChild(circle)
         
+        let numberOfMembers = self.calculateNumberOfMembers()
         for memberNumber in 0..<numberOfMembers {
             
             let currentAngleBetweenBodyAndMember = (2 * CGFloat.pi / CGFloat(numberOfMembers)) * CGFloat(memberNumber)
-            
-            let x_offset: CGFloat = 20 * cos(currentAngleBetweenBodyAndMember)
-            let y_offset: CGFloat = 20 * sin(currentAngleBetweenBodyAndMember)
+        
+            let distance: CGFloat = self.bodySize.height + self.memberSize.height
+            let x_offset: CGFloat = distance * cos(currentAngleBetweenBodyAndMember)
+            let y_offset: CGFloat = distance * sin(currentAngleBetweenBodyAndMember)
             
             let point: SKSpriteNode = SKSpriteNode(color: UIColor.gray,
                                                    size: self.memberSize)
@@ -83,5 +84,13 @@ extension LittlePersonBuilder {
         let yPosition = CGFloat.random(in: minY...maxY)
         
         return CGPoint(x: xPosition, y: yPosition)
+    }
+    
+    private func calculateNumberOfMembers() -> Int {
+        let distance: CGFloat = self.bodySize.height/2 + self.memberSize.height/2
+        let angleBetweenMembers = 2 * asin(self.memberSize.width/2/distance)
+        let numberOfMembers = Int(2 * CGFloat.pi / angleBetweenMembers)
+        print("distance\(distance) - angleBetweenMembers\(angleBetweenMembers) - numberOfMembers\(numberOfMembers)")
+        return numberOfMembers
     }
 }

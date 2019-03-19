@@ -13,6 +13,8 @@ class GameScene: SKScene {
         for _ in 0...20 {
             let littlePerson = LittlePersonBuilder()
                 .addInto(scene: self)
+                .with(bodySize: 50)
+                .with(memberSize: 14)
                 .build()
             self.circles.append(littlePerson)
         }
@@ -38,7 +40,7 @@ class GameScene: SKScene {
 
 // Load the SKScene from 'GameScene.sks'
 let sceneView = SKView(frame: CGRect(x:0 , y:0, width: 640, height: 480))
-sceneView.showsPhysics = true
+//sceneView.showsPhysics = true
 if let scene = GameScene(fileNamed: "GameScene") {
     // Set the scale mode to scale to fit the window
     scene.scaleMode = .aspectFill

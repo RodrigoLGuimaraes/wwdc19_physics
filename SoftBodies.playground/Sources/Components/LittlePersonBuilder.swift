@@ -4,6 +4,9 @@ import SpriteKit
 public class LittlePersonBuilder {
     
     var scene: SKScene?
+    var bodySize: CGSize = CGSize(width: 10, height: 10)
+    var memberSize: CGSize = CGSize(width: 10, height: 10)
+    var numberOfMembers: Int = 6
     
     public init() {}
     
@@ -12,44 +15,45 @@ public class LittlePersonBuilder {
         return self
     }
     
+    public func with(bodySize: CGSize) -> LittlePersonBuilder {
+        self.bodySize = bodySize
+        return self
+    }
+    
+    public func with(numberOfMembers: Int) -> LittlePersonBuilder {
+        self.numberOfMembers = numberOfMembers
+        return self
+    }
+    
     public func build() -> SKSpriteNode {
         
         let circle = SKSpriteNode(color: SKColor.white,
-                                  size: CGSize(width: 10, height: 10))
+                                  size: self.bodySize)
         
-        let xPosition = CGFloat.random(in: -200...200)
-        let yPosition = CGFloat.random(in: -200...200)
-        
-        circle.position = CGPoint(x: xPosition, y: yPosition)
-        circle.name = "player"
-        
-        circle.physicsBody = SKPhysicsBody(circleOfRadius: 10)
+        circle.physicsBody = SKPhysicsBody(rectangleOf: self.bodySize)
         circle.physicsBody?.isDynamic = true
         circle.physicsBody?.affectedByGravity = false
         circle.physicsBody?.mass = 4.0
         
+        circle.position = self.calculatePosition()
         self.scene?.addChild(circle)
         
-        for loop in 0..<6 {
+        for memberNumber in 0..<numberOfMembers {
             
-            let angle: CGFloat = ((CGFloat(M_PI) * 2)/6) * CGFloat(loop)
+            let currentAngleBetweenBodyAndMember = (2 * CGFloat.pi / CGFloat(numberOfMembers)) * CGFloat(memberNumber)
             
-            var x_offset: CGFloat = cos(angle)
-            var y_offset: CGFloat = sin(angle)
-            
-            x_offset *= 20
-            y_offset *= 20
+            let x_offset: CGFloat = 20 * cos(currentAngleBetweenBodyAndMember)
+            let y_offset: CGFloat = 20 * sin(currentAngleBetweenBodyAndMember)
             
             let point: SKSpriteNode = SKSpriteNode(color: UIColor.gray,
-                                                   size: CGSize(width: 10, height: 10))
+                                                   size: self.memberSize)
             point.position = CGPoint(x: x_offset,
                                      y: y_offset)
-            point.name = "samllcircle"
             
-            point.physicsBody = SKPhysicsBody(circleOfRadius: 10)
+            point.physicsBody = SKPhysicsBody(circleOfRadius: self.memberSize.height)
             point.physicsBody?.isDynamic = true
             point.physicsBody?.affectedByGravity = true
-            point.physicsBody?.mass = 2/6
+            point.physicsBody?.mass = 1/3
             
             circle.addChild(point)
             
@@ -65,5 +69,19 @@ public class LittlePersonBuilder {
         }
         
         return circle
+    }
+}
+
+extension LittlePersonBuilder {
+    private func calculatePosition() -> CGPoint {
+        let minX = self.scene?.frame.minX ?? -200
+        let maxX = self.scene?.frame.maxX ?? 200
+        let minY = self.scene?.frame.minY ?? -200
+        let maxY = self.scene?.frame.maxY ?? 200
+        
+        let xPosition = CGFloat.random(in: minX...maxX)
+        let yPosition = CGFloat.random(in: minY...maxY)
+        
+        return CGPoint(x: xPosition, y: yPosition)
     }
 }

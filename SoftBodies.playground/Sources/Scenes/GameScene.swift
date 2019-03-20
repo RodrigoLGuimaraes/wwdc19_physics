@@ -5,11 +5,17 @@ public class GameScene: SKScene {
     
     private var circles = [SKSpriteNode]()
     
-    public override init(size: CGSize) {
+    var behaviourManager: BehaviourManager = TargetedBehaviourManager()
+    
+    public convenience init(size: CGSize, test: String) {
+        self.init(size: size)
+    }
+    
+    override init(size: CGSize) {
         super.init(size: size)
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("coder initializer not implemented")
     }
     
@@ -20,20 +26,11 @@ public class GameScene: SKScene {
     }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard touches.first != nil else {
+        guard let target = touches.first else {
             return
         }
         
-        for circle in self.circles {
-            let totalForce: CGFloat = 4000
-            let xDirection: CGFloat = Bool.random() ? 1 : -1
-            let yDirection: CGFloat = Bool.random() ? 1 : -1
-            let xForce: CGFloat = CGFloat.random(in: 0...totalForce)
-            let yForce =  (totalForce - xForce)
-            
-            circle.physicsBody?.applyImpulse(CGVector(dx: xDirection * xForce,
-                                                      dy: yDirection * yForce))
-        }
+        behaviourManager.performBehavior(on: self.circles, given: target.location(in: self.view))
     }
 }
 

@@ -12,8 +12,6 @@ class TargetedBehaviourManager: BehaviourManager {
             let direction = CGVector(dx: xDistance,
                                      dy: yDistance).normalized()
             
-            print("xDistance\(xDistance) - yDistance\(yDistance) - direction\(direction)")
-            
             behaver.physicsBody?.applyImpulse(totalForce * direction)
         }
     }

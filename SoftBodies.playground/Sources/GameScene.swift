@@ -5,6 +5,14 @@ public class GameScene: SKScene {
     
     private var circles = [SKSpriteNode]()
     
+    public override init(size: CGSize) {
+        super.init(size: size)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("coder initializer not implemented")
+    }
+    
     public override func didMove(to view: SKView) {
         physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         

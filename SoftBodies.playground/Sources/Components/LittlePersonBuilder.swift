@@ -77,10 +77,12 @@ public class LittlePersonBuilder {
 
 extension LittlePersonBuilder {
     private func calculatePosition() -> CGPoint {
-        let minX = self.scene?.frame.minX ?? -200
-        let maxX = self.scene?.frame.maxX ?? 200
-        let minY = self.scene?.frame.minY ?? -200
-        let maxY = self.scene?.frame.maxY ?? 200
+        let margin = self.memberSize.width + self.bodySize.width
+        
+        let minX = margin + (self.scene?.frame.minX ?? -200)
+        let maxX = (self.scene?.frame.maxX ?? 200) - margin
+        let minY = margin + (self.scene?.frame.minY ?? -200)
+        let maxY = (self.scene?.frame.maxY ?? 200) - margin
         
         let xPosition = CGFloat.random(in: minX...maxX)
         let yPosition = CGFloat.random(in: minY...maxY)

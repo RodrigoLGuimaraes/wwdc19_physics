@@ -31,7 +31,7 @@ public class GameScene: SKScene {
 
 extension GameScene {
     func createSubParticles() {
-        for _ in 0...200 {
+        for _ in 0...20 {
             let littlePerson = LittlePersonBuilder()
                 .addInto(scene: self)
                 .with(bodySize: 15)

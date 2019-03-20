@@ -6,6 +6,7 @@ public class GameScene: SKScene {
     private var circles = [SKSpriteNode]()
     
     var behaviourManager: BehaviourManager = TargetedBehaviourManager()
+    var colorizer: Colorizer = DefaultColorizer()
     
     public convenience init(size: CGSize, test: String) {
         self.init(size: size)
@@ -31,6 +32,10 @@ public class GameScene: SKScene {
         }
         
         behaviourManager.performBehavior(on: self.circles, given: target.location(in: self.view))
+    }
+    
+    public override func update(_ currentTime: TimeInterval) {
+        self.colorizer.updateColor(circles, at: currentTime)
     }
 }
 

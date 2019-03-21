@@ -8,9 +8,13 @@ public protocol GameSceneDelegate: class {
 public class GameScene: SKScene {
     
     private var circles = [SKSpriteNode]()
+    private var mainLabel = UILabel(frame: CGRect.zero)
     
     var behaviourManager: BehaviourManager = DefaultBehaviourManager()
     var colorizer: Colorizer = DefaultColorizer()
+    
+    static private let InvalidTime: TimeInterval = -1
+    var currentScriptInitialTime: TimeInterval = GameScene.InvalidTime
     var scriptControllers: [ScriptController]
     
     weak var gameSceneDelegate: GameSceneDelegate?
@@ -31,10 +35,15 @@ public class GameScene: SKScene {
         
         self.scriptControllers = scriptControllers
         
+        
+    }
+    
+    private func nextScript() {
         guard var nextScript = self.scriptControllers.first else {
             return
         }
         
+        self.currentScriptInitialTime = GameScene.InvalidTime
         nextScript.delegate = self
     }
     
@@ -51,6 +60,7 @@ public class GameScene: SKScene {
         physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
         
         self.createSubParticles()
+        self.createMainLabel()
     }
     
     public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -62,11 +72,36 @@ public class GameScene: SKScene {
     }
     
     public override func update(_ currentTime: TimeInterval) {
+        if self.currentScriptInitialTime == GameScene.InvalidTime {
+            self.currentScriptInitialTime = currentTime
+        }
+        
         self.colorizer.updateColor(circles, at: currentTime)
+        self.scriptControllers.first?.updateScript(mainLabel: self.mainLabel,
+                                                   at: currentTime - self.currentScriptInitialTime)
     }
 }
 
 extension GameScene {
+    func createMainLabel() {
+        self.mainLabel = UILabel(frame: CGRect.zero)
+        self.mainLabel.textAlignment = .center
+        self.mainLabel.font = UIFont(name: "AvenirNext-Regular", size: 30)
+        self.mainLabel.textColor = UIColor(red: 0.94, green: 0.96, blue: 0.98, alpha: 0.8)
+        self.mainLabel.text = "testando"
+        
+        //Positioning
+        guard let superview = self.view else {
+            return
+        }
+        superview.addSubview(self.mainLabel)
+        self.mainLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.mainLabel.leftAnchor.constraint(equalTo: superview.leftAnchor, constant: 24).isActive = true
+        self.mainLabel.rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -24).isActive = true
+        self.mainLabel.centerXAnchor.constraint(equalTo: superview.centerXAnchor, constant: 0).isActive = true
+        self.mainLabel.centerYAnchor.constraint(equalTo: superview.centerYAnchor, constant: 0).isActive = true
+    }
+    
     func createSubParticles() {
         for _ in 0...20 {
             let littlePerson = LittlePersonBuilder()

@@ -1,7 +1,7 @@
 import Foundation
-import SpriteKit
+import UIKit
 
 public protocol ScriptController {
-    func updateScript(mainLabel: SKLabelNode, at: TimeInterval)
+    func updateScript(mainLabel: UILabel, at: TimeInterval)
     weak var delegate: ScriptControllerDelegate? { get set }
 }

@@ -32,7 +32,9 @@ public class Launcher {
         let scene = GameScene(size: sceneView.frame.size,
                               behaviourManager: nil,
                               colorizer: nil,
-                              scriptControllers: [ScriptController]())
+                              scriptControllers: [
+                SingleSentenceScriptController(text: "Hello")
+            ])
         self.configure(scene: scene)
         self.present(scene: scene)
     }

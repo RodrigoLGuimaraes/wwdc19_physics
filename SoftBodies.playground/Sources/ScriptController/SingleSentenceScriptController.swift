@@ -9,7 +9,7 @@ class SingleSentenceScriptController: ScriptController {
     private let fadeTime: TimeInterval
     private let timeToRead: TimeInterval
     
-    init(text: String, startDelay: TimeInterval = 0, fadeTime: TimeInterval = 3) {
+    init(text: String, startDelay: TimeInterval = 0, fadeTime: TimeInterval = 1.5) {
         self.text = text
         self.startDelay = startDelay
         self.fadeTime = fadeTime

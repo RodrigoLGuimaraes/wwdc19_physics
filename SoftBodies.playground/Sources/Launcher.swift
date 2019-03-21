@@ -33,7 +33,9 @@ public class Launcher {
                               behaviourManager: nil,
                               colorizer: nil,
                               scriptControllers: [
-                SingleSentenceScriptController(text: "Hello")
+                SingleSentenceScriptController(text: "Hello", startDelay: 1),
+                SingleSentenceScriptController(text: "How Are you doing?"),
+                SingleSentenceScriptController(text: "I'm fine, glad you asked."),
             ])
         self.configure(scene: scene)
         self.present(scene: scene)

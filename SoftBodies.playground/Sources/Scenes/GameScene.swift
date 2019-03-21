@@ -34,12 +34,12 @@ public class GameScene: SKScene {
         }
         
         self.scriptControllers = scriptControllers
-        
-        
+        self.nextScript()
     }
     
     private func nextScript() {
         guard var nextScript = self.scriptControllers.first else {
+            self.gameSceneDelegate?.didFinishAllScriptForScene()
             return
         }
         
@@ -88,7 +88,7 @@ extension GameScene {
         self.mainLabel.textAlignment = .center
         self.mainLabel.font = UIFont(name: "AvenirNext-Regular", size: 30)
         self.mainLabel.textColor = UIColor(red: 0.94, green: 0.96, blue: 0.98, alpha: 0.8)
-        self.mainLabel.text = "testando"
+        self.mainLabel.text = ""
         
         //Positioning
         guard let superview = self.view else {
@@ -117,12 +117,6 @@ extension GameScene {
 extension GameScene: ScriptControllerDelegate {
     public func didFinishScript() {
         self.scriptControllers = Array(self.scriptControllers.dropFirst())
-        
-        guard var nextScript = self.scriptControllers.first else {
-            self.gameSceneDelegate?.didFinishAllScriptForScene()
-            return
-        }
-        
-        nextScript.delegate = self
+        nextScript()
     }
 }

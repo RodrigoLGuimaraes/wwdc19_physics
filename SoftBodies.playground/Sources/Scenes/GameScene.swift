@@ -1,18 +1,45 @@
 import Foundation
 import SpriteKit
 
+public protocol GameSceneDelegate: class {
+    func didFinishAllScriptForScene()
+}
+
 public class GameScene: SKScene {
     
     private var circles = [SKSpriteNode]()
     
-    var behaviourManager: BehaviourManager = TargetedBehaviourManager()
-    var colorizer: Colorizer = TimerColorizer()
+    var behaviourManager: BehaviourManager = DefaultBehaviourManager()
+    var colorizer: Colorizer = DefaultColorizer()
+    var scriptControllers: [ScriptController]
     
-    public convenience init(size: CGSize, test: String) {
+    weak var gameSceneDelegate: GameSceneDelegate?
+    
+    public convenience init(size: CGSize,
+                            behaviourManager: BehaviourManager?,
+                            colorizer: Colorizer?,
+                            scriptControllers: [ScriptController]) {
         self.init(size: size)
+        
+        if let behaviourManager = behaviourManager {
+            self.behaviourManager = behaviourManager
+        }
+        
+        if let colorizer = colorizer {
+            self.colorizer = colorizer
+        }
+        
+        self.scriptControllers = scriptControllers
+        
+        guard var nextScript = self.scriptControllers.first else {
+            return
+        }
+        
+        nextScript.delegate = self
     }
     
     override init(size: CGSize) {
+        self.scriptControllers = [ScriptController]()
         super.init(size: size)
     }
     
@@ -49,5 +76,18 @@ extension GameScene {
                 .build()
             self.circles.append(littlePerson)
         }
+    }
+}
+
+extension GameScene: ScriptControllerDelegate {
+    public func didFinishScript() {
+        self.scriptControllers = Array(self.scriptControllers.dropFirst())
+        
+        guard var nextScript = self.scriptControllers.first else {
+            self.gameSceneDelegate?.didFinishAllScriptForScene()
+            return
+        }
+        
+        nextScript.delegate = self
     }
 }

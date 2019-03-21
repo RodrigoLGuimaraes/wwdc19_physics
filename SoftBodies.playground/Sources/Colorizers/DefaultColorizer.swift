@@ -1,7 +1,7 @@
 import SpriteKit
 
-class DefaultColorizer: Colorizer {
-    func updateColor(_ nodes: [SKSpriteNode], at: TimeInterval) {
+public class DefaultColorizer: Colorizer {
+    public func updateColor(_ nodes: [SKSpriteNode], at: TimeInterval) {
         nodes.forEach { (node) in
             guard let velocity = node.physicsBody?.velocity else {
                 return

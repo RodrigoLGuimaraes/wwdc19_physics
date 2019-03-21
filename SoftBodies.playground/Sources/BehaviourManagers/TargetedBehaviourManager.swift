@@ -1,8 +1,8 @@
 import Foundation
 import SpriteKit
 
-class TargetedBehaviourManager: BehaviourManager {
-    func performBehavior(on behavers: [SKSpriteNode], given stimulusLocation: CGPoint) {
+public class TargetedBehaviourManager: BehaviourManager {
+    public func performBehavior(on behavers: [SKSpriteNode], given stimulusLocation: CGPoint) {
         behavers.forEach { (behaver) in
             let totalForce: CGFloat = 4000
             

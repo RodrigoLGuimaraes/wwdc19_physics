@@ -10,7 +10,7 @@ class TargetedBehaviourManager: BehaviourManager {
             let yDistance = stimulusLocation.y - behaver.position.y
             
             let direction = CGVector(dx: xDistance,
-                                     dy: yDistance).normalized()
+                                     dy: -yDistance).normalized()
             
             behaver.physicsBody?.applyImpulse(totalForce * direction)
         }

@@ -6,7 +6,7 @@ public class GameScene: SKScene {
     private var circles = [SKSpriteNode]()
     
     var behaviourManager: BehaviourManager = TargetedBehaviourManager()
-    var colorizer: Colorizer = DefaultColorizer()
+    var colorizer: Colorizer = TimerColorizer()
     
     public convenience init(size: CGSize, test: String) {
         self.init(size: size)

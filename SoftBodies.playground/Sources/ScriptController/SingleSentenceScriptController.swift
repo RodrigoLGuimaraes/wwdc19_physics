@@ -9,8 +9,17 @@ class SingleSentenceScriptController: ScriptController {
     private let fadeTime: TimeInterval
     private let timeToRead: TimeInterval
     
-    init(text: String, startDelay: TimeInterval = 0, fadeTime: TimeInterval = 1.5) {
+    var behaviourManager: BehaviourManager
+    var colorizer: Colorizer
+    
+    init(text: String,
+         behaviourManager: BehaviourManager = DefaultBehaviourManager(),
+         colorizer: Colorizer = DefaultColorizer(),
+         startDelay: TimeInterval = 0,
+         fadeTime: TimeInterval = 1.5) {
         self.text = text
+        self.behaviourManager = behaviourManager
+        self.colorizer = colorizer
         self.startDelay = startDelay
         self.fadeTime = fadeTime
         self.timeToRead = ScriptControllerUtils.calculateTime(toRead: text, with: ReadSpeed.regular)

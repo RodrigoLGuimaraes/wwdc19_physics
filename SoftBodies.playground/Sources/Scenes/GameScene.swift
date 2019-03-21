@@ -10,9 +10,6 @@ public class GameScene: SKScene {
     private var circles = [SKSpriteNode]()
     private var mainLabel = UILabel(frame: CGRect.zero)
     
-    var behaviourManager: BehaviourManager = DefaultBehaviourManager()
-    var colorizer: Colorizer = DefaultColorizer()
-    
     static private let InvalidTime: TimeInterval = -1
     var currentScriptInitialTime: TimeInterval = GameScene.InvalidTime
     var scriptControllers: [ScriptController]
@@ -20,18 +17,8 @@ public class GameScene: SKScene {
     weak var gameSceneDelegate: GameSceneDelegate?
     
     public convenience init(size: CGSize,
-                            behaviourManager: BehaviourManager?,
-                            colorizer: Colorizer?,
                             scriptControllers: [ScriptController]) {
         self.init(size: size)
-        
-        if let behaviourManager = behaviourManager {
-            self.behaviourManager = behaviourManager
-        }
-        
-        if let colorizer = colorizer {
-            self.colorizer = colorizer
-        }
         
         self.scriptControllers = scriptControllers
         self.nextScript()
@@ -68,7 +55,9 @@ public class GameScene: SKScene {
             return
         }
         
-        behaviourManager.performBehavior(on: self.circles, given: target.location(in: self.view))
+        self.scriptControllers.first?
+            .behaviourManager.performBehavior(on: self.circles,
+                                              given: target.location(in: self.view))
     }
     
     public override func update(_ currentTime: TimeInterval) {
@@ -76,7 +65,7 @@ public class GameScene: SKScene {
             self.currentScriptInitialTime = currentTime
         }
         
-        self.colorizer.updateColor(circles, at: currentTime)
+        self.scriptControllers.first?.colorizer.updateColor(circles, at: currentTime)
         self.scriptControllers.first?.updateScript(mainLabel: self.mainLabel,
                                                    at: currentTime - self.currentScriptInitialTime)
     }

@@ -3,5 +3,7 @@ import UIKit
 
 public protocol ScriptController {
     func updateScript(mainLabel: UILabel, at: TimeInterval)
-    weak var delegate: ScriptControllerDelegate? { get set }
+    var delegate: ScriptControllerDelegate? { get set }
+    var behaviourManager: BehaviourManager { get set }
+    var colorizer: Colorizer { get set }
 }

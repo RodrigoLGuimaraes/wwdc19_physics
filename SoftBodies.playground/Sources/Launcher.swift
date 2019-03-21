@@ -29,14 +29,17 @@ public class Launcher {
     }
     
     public func launchInitialScene() {
+        let initialScript = [
+            SingleSentenceScriptController(text: "Hello",
+                                           behaviourManager: DefaultBehaviourManager(),
+                                           colorizer: DefaultColorizer(),
+                                           startDelay: 1),
+            SingleSentenceScriptController(text: "How Are you doing?"),
+            SingleSentenceScriptController(text: "I'm fine, glad you asked."),
+        ]
+        
         let scene = GameScene(size: sceneView.frame.size,
-                              behaviourManager: nil,
-                              colorizer: nil,
-                              scriptControllers: [
-                SingleSentenceScriptController(text: "Hello", startDelay: 1),
-                SingleSentenceScriptController(text: "How Are you doing?"),
-                SingleSentenceScriptController(text: "I'm fine, glad you asked."),
-            ])
+                              scriptControllers: initialScript)
         self.configure(scene: scene)
         self.present(scene: scene)
     }

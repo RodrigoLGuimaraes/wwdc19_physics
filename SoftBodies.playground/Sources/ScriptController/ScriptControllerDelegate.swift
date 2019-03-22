@@ -1,5 +1,6 @@
 import Foundation
+import SpriteKit
 
 public protocol ScriptControllerDelegate: class {
-    func didFinishScript()
+    func didFinishScript(remainingNodes: [SKSpriteNode])
 }

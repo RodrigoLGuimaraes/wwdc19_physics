@@ -14,7 +14,7 @@ public class LittlePersonBuilder {
     
     public init() {}
     
-    public func addInto(scene: SKScene) -> LittlePersonBuilder {
+    public func addInto(scene: SKScene?) -> LittlePersonBuilder {
         self.scene = scene
         return self
     }

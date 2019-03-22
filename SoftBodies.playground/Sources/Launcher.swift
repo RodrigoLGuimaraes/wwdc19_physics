@@ -31,11 +31,20 @@ public class Launcher {
     public func launchInitialScene() {
         let initialScript = [
             SingleSentenceScriptController(text: "Hello",
+                                           elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 15, memberSize: 9),
                                            behaviourManager: DefaultBehaviourManager(),
                                            colorizer: DefaultColorizer(),
                                            startDelay: 1),
-            SingleSentenceScriptController(text: "How Are you doing?"),
-            SingleSentenceScriptController(text: "I'm fine, glad you asked."),
+            SingleSentenceScriptController(text: "How are you doing?",
+                                           elementConfiguration: ElementConfiguration(numberOfElements: 2, bodySize: 15, memberSize: 15),
+                                           behaviourManager: DefaultBehaviourManager(),
+                                           colorizer: DefaultColorizer(),
+                                           startDelay: 1),
+            SingleSentenceScriptController(text: "I'm fine, glad you asked.",
+                                           elementConfiguration: ElementConfiguration(numberOfElements: 3, bodySize: 9, memberSize: 15),
+                                           behaviourManager: DefaultBehaviourManager(),
+                                           colorizer: DefaultColorizer(),
+                                           startDelay: 1),
         ]
         
         let scene = GameScene(size: sceneView.frame.size,

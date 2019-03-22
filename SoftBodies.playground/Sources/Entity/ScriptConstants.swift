@@ -23,7 +23,7 @@ struct ScriptConstants {
                                        elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 11.0, memberSize: 7.0, keepToNextGeneration: true),
                                        behaviourManager: DefaultBehaviourManager()),
         SingleSentenceScriptController(text: "overcame a big challenge!",
-                                       elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 50.0, memberSize: 18.0, keepToNextGeneration: true),
+                                       elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 50.0, memberSize: 0, keepToNextGeneration: true),
                                        behaviourManager: DefaultBehaviourManager(),
                                        colorizer: DefaultColorizer(),
                                        startDelay: 1.0),

@@ -40,6 +40,11 @@ public class LittlePersonBuilder {
         body.position = self.calculatePosition()
         self.scene?.addChild(body)
         
+        guard self.memberSize.height > 0 else {
+            body.physicsBody?.affectedByGravity = true
+            return body
+        }
+        
         let numberOfMembers = self.calculateNumberOfMembers()
         for memberNumber in 0..<numberOfMembers {
             

@@ -95,6 +95,7 @@ extension SingleSentenceScriptController {
         mainLabel.font = UIFont(name: "AvenirNext-Regular", size: 30)
         mainLabel.textColor = UIColor(red: 0.94, green: 0.96, blue: 0.98, alpha: 0.8)
         mainLabel.text = self.text
+        mainLabel.numberOfLines = 0
         mainLabel.alpha = 0
         
         superview.addSubview(mainLabel)
@@ -106,7 +107,11 @@ extension SingleSentenceScriptController {
     }
     
     private func createSubParticles() {
-        for _ in 0...elementConfiguration.numberOfElements {
+        guard elementConfiguration.numberOfElements > 0 else {
+            return
+        }
+        
+        for _ in 0..<elementConfiguration.numberOfElements {
             let littlePerson = LittlePersonBuilder()
                 .addInto(scene: self.view?.scene)
                 .with(bodySize: elementConfiguration.bodySize)

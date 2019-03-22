@@ -1,3 +1,5 @@
 //: A SpriteKit based Playground
 
-Launcher().start()
+let script = Script.defaultScript
+
+Launcher().start(with: script)

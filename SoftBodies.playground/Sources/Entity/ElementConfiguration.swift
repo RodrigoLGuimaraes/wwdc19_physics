@@ -7,10 +7,10 @@ struct ElementConfiguration {
     var memberSize: CGFloat
     var keepToNextGeneration: Bool
     
-    init(numberOfElements: Int, bodySize: CGFloat, memberSize: CGFloat, keepToNextGeneration: Bool = true) {
+    init(numberOfElements: Int, bodySize: Double, memberSize: Double, keepToNextGeneration: Bool = true) {
         self.numberOfElements = numberOfElements
-        self.bodySize = bodySize
-        self.memberSize = memberSize
+        self.bodySize = CGFloat(bodySize)
+        self.memberSize = CGFloat(memberSize)
         self.keepToNextGeneration = keepToNextGeneration
     }
 }

@@ -24,31 +24,17 @@ public class Launcher {
         PlaygroundPage.current.needsIndefiniteExecution = true
     }
     
-    public func start() {
-        self.launchInitialScene()
-    }
-    
-    public func launchInitialScene() {
-        let initialScript = [
-            SingleSentenceScriptController(text: "Hello",
-                                           elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 15, memberSize: 9, keepToNextGeneration: false),
-                                           behaviourManager: DefaultBehaviourManager(),
-                                           colorizer: DefaultColorizer(),
-                                           startDelay: 1),
-            SingleSentenceScriptController(text: "How are you doing?",
-                                           elementConfiguration: ElementConfiguration(numberOfElements: 2, bodySize: 15, memberSize: 15),
-                                           behaviourManager: DefaultBehaviourManager(),
-                                           colorizer: DefaultColorizer(),
-                                           startDelay: 1),
-            SingleSentenceScriptController(text: "I'm fine, glad you asked.",
-                                           elementConfiguration: ElementConfiguration(numberOfElements: 3, bodySize: 9, memberSize: 15),
-                                           behaviourManager: DefaultBehaviourManager(),
-                                           colorizer: DefaultColorizer(),
-                                           startDelay: 1),
-        ]
+    public func start(with script: Script) {
+        var scriptControllers: [ScriptController]!
+        if script == Script.defaultScript {
+            scriptControllers = ScriptConstants.defaultScript
+        }
+        if case let Script.customScript(customScriptControllers) = script {
+            scriptControllers = customScriptControllers
+        }
         
         let scene = GameScene(size: sceneView.frame.size,
-                              scriptControllers: initialScript)
+                              scriptControllers: scriptControllers)
         self.configure(scene: scene)
         self.present(scene: scene)
     }

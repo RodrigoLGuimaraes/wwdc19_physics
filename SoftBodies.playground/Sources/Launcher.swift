@@ -31,7 +31,7 @@ public class Launcher {
     public func launchInitialScene() {
         let initialScript = [
             SingleSentenceScriptController(text: "Hello",
-                                           elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 15, memberSize: 9),
+                                           elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 15, memberSize: 9, keepToNextGeneration: false),
                                            behaviourManager: DefaultBehaviourManager(),
                                            colorizer: DefaultColorizer(),
                                            startDelay: 1),

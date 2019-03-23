@@ -19,6 +19,8 @@
  
  ## Create your own story:
  
+ - Important: BE SURE TO PLAY THE DEMO STORY BEFORE YOU CREATE YOUR OWN, IT WILL HELP YOU UNDERSTAND.
+ 
  Right below we have an array with all the scenes. Each scene has the following:
  
  - **Text**: This is the text that will be shown on the screen.
@@ -57,7 +59,7 @@ let scriptControllers: [ScriptController] = [
                                    elementConfiguration: ElementConfiguration.justKeepOldElements,
                                    behaviourManager: EmptyBehaviourManager(),
                                    colorizer: DefaultColorizer()),
-    SingleSentenceScriptController(text: "This is a story about how me…",
+    SingleSentenceScriptController(text: "This is a story about how I…",
                                    textAnimator: EmptyTextAnimator(),
                                    elementConfiguration: ElementConfiguration.justKeepOldElements,
                                    behaviourManager: DefaultBehaviourManager(),

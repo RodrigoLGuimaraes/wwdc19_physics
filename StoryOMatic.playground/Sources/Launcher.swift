@@ -8,6 +8,10 @@ public class Launcher {
     
     public init() {
         sceneView = SKView(frame: CGRect(x:0 , y:0, width: 640, height: 480))
+        sceneView.backgroundColor = UIColor(red: 38/255.0,
+                                            green: 38/255.0,
+                                            blue: 38/255.0,
+                                            alpha: 1)
     }
     
     private func configure(scene: SKScene, debug: Bool = false) {

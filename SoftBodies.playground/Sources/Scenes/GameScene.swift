@@ -13,7 +13,7 @@ public class GameScene: SKScene {
     var currentScriptInitialTime: TimeInterval = GameScene.InvalidTime
     var scriptControllers: [ScriptController]
     
-    weak var gameSceneDelegate: GameSceneDelegate?
+    var gameSceneDelegate: GameSceneDelegate?
     
     public convenience init(size: CGSize,
                             scriptControllers: [ScriptController]) {
@@ -22,8 +22,10 @@ public class GameScene: SKScene {
     }
     
     private func nextScript(remainingNodes: [SKSpriteNode] = [SKSpriteNode]()) {
+        print("nextScript")
         guard var nextScript = self.scriptControllers.first,
               let skView = self.view else {
+            print("didFinishAll \(self.gameSceneDelegate)")
             self.gameSceneDelegate?.didFinishAllScriptForScene()
             return
         }

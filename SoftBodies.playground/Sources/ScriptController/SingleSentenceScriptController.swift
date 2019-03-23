@@ -45,10 +45,17 @@ class SingleSentenceScriptController: ScriptController {
     }
     
     func updateScript(at time: TimeInterval) {
+        self.colorizer.updateColor(self.targetElements, at: time)
+        
+        guard let labelConstraints = self.labelConstrains,
+            let label = self.mainLabel else {
+                return
+        }
+        self.textAnimator.animate(label: label, labelConstraints: labelConstraints, at: time)
+        
         let timeToCompleteShowingLabel = startDelay + fadeTime
         let timeToStartDismissing = timeToCompleteShowingLabel + timeToRead
         let timeToFinishDismissingLabel = timeToStartDismissing + fadeTime
-        
         guard let alpha = ScriptControllerUtils.calculateAlpha(currentTime: time,
                                                                timeToStartShowingLabel: startDelay,
                                                                timeToCompleteShowingLabel: timeToCompleteShowingLabel,
@@ -61,15 +68,7 @@ class SingleSentenceScriptController: ScriptController {
         if !elementConfiguration.keepToNextGeneration && time > timeToStartDismissing {
             self.targetElements.forEach { $0.alpha = alpha }
         }
-        self.colorizer.updateColor(self.targetElements, at: time)
-        mainLabel?.alpha = alpha
-        
-        guard let labelConstraints = self.labelConstrains,
-              let label = self.mainLabel else {
-            return
-        }
-        
-        self.textAnimator.animate(label: label, labelConstraints: labelConstraints, at: time)
+        label.alpha = alpha
     }
     
     func performBehaviour(given touchLocation: CGPoint) {

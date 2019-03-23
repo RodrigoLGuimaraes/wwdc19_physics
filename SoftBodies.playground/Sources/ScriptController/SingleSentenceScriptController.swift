@@ -6,6 +6,7 @@ class SingleSentenceScriptController: ScriptController {
     weak var delegate: ScriptControllerDelegate?
     
     private let text: String
+    private let textAnimator: TextAnimator
     private let elementConfiguration: ElementConfiguration
     private let startDelay: TimeInterval
     private let fadeTime: TimeInterval
@@ -16,15 +17,18 @@ class SingleSentenceScriptController: ScriptController {
     
     private var view: SKView?
     private var mainLabel: UILabel?
+    private var labelConstrains: LabelConstraints?
     private var targetElements = [SKSpriteNode]()
     
     init(text: String,
+         textAnimator: TextAnimator,
          elementConfiguration: ElementConfiguration,
          behaviourManager: BehaviourManager = DefaultBehaviourManager(),
          colorizer: Colorizer = DefaultColorizer(),
          startDelay: TimeInterval = 0,
          fadeTime: TimeInterval = 1.5) {
         self.text = text
+        self.textAnimator = textAnimator
         self.elementConfiguration = elementConfiguration
         self.behaviourManager = behaviourManager
         self.colorizer = colorizer
@@ -59,6 +63,13 @@ class SingleSentenceScriptController: ScriptController {
         }
         self.colorizer.updateColor(self.targetElements, at: time)
         mainLabel?.alpha = alpha
+        
+        guard let labelConstraints = self.labelConstrains,
+              let label = self.mainLabel else {
+            return
+        }
+        
+        self.textAnimator.animate(label: label, labelConstraints: labelConstraints, at: time)
     }
     
     func performBehaviour(given touchLocation: CGPoint) {
@@ -100,10 +111,17 @@ extension SingleSentenceScriptController {
         
         superview.addSubview(mainLabel)
         mainLabel.translatesAutoresizingMaskIntoConstraints = false
-        mainLabel.leftAnchor.constraint(equalTo: superview.leftAnchor, constant: 24).isActive = true
-        mainLabel.rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -24).isActive = true
-        mainLabel.centerXAnchor.constraint(equalTo: superview.centerXAnchor, constant: 0).isActive = true
-        mainLabel.centerYAnchor.constraint(equalTo: superview.centerYAnchor, constant: 0).isActive = true
+        
+        let leftConstraint = mainLabel.leftAnchor.constraint(equalTo: superview.leftAnchor, constant: 24)
+        leftConstraint.isActive = true
+        let rightConstraint = mainLabel.rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -24)
+        rightConstraint.isActive = true
+        let yConstraint = mainLabel.centerYAnchor.constraint(equalTo: superview.centerYAnchor, constant: 0)
+        yConstraint.isActive = true
+        
+        self.labelConstrains = LabelConstraints(leftConstraint: leftConstraint,
+                                                rightConstraint: rightConstraint,
+                                                yConstraint: yConstraint)
     }
     
     private func createSubParticles() {

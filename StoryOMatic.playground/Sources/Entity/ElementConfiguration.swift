@@ -4,6 +4,7 @@ import UIKit
 public struct ElementConfiguration {
     
     public static let justKeepOldElements = ElementConfiguration(numberOfElements: 0, bodySize: 1.0, memberSize: 1.0, keepToNextGeneration: true)
+    public static let dropAllElements = ElementConfiguration(numberOfElements: 0, bodySize: 1.0, memberSize: 1.0, keepToNextGeneration: false)
     
     var numberOfElements: Int
     var bodySize: CGFloat

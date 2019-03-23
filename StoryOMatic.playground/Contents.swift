@@ -33,10 +33,7 @@
  - Note: Created by *Rodrigo Longhi Guimarães*. This playground is meant to be used in XCode or in iPad Playgrounds.
  
  */
-
-//#-hidden-code
 import SpriteKit
-//#-end-hidden-code
 
 let scriptControllers: [ScriptController] = [
     SingleSentenceScriptController(text: "Hello, this is Me.",
@@ -112,7 +109,7 @@ let scriptControllers: [ScriptController] = [
                                    colorizer: DefaultColorizer()),
     SingleSentenceScriptController(text: "We eventually gave up and quit...",
                                    textAnimator: EmptyTextAnimator(),
-                                   elementConfiguration: ElementConfiguration.justKeepOldElements,
+                                   elementConfiguration: ElementConfiguration.dropAllElements,
                                    behaviourManager: DefaultBehaviourManager(),
                                    colorizer: SolidColorizer(color: SKColor(red: 77/255.0, green: 102/255.0, blue: 129/255.0, alpha: 1))),
     SingleSentenceScriptController(text: "...and since I didn't have a job now...",

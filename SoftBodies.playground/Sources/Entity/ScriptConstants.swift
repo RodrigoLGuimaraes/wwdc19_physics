@@ -5,7 +5,7 @@ struct ScriptConstants {
     
     static let defaultScript: [ScriptController] = [
         SingleSentenceScriptController(text: "Hello, this is Me.",
-                                       textAnimator: LeftAndRightTextAnimator(),
+                                       textAnimator: ShakeTextAnimator(),
                                        elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 15.0, memberSize: 9.0, keepToNextGeneration: true),
                                        behaviourManager: DefaultBehaviourManager(),
                                        colorizer: DefaultColorizer(),

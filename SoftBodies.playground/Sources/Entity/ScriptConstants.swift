@@ -5,7 +5,7 @@ struct ScriptConstants {
     
     static let defaultScript: [ScriptController] = [
         SingleSentenceScriptController(text: "Hello, this is Me.",
-                                       textAnimator: MoveUpAndDownTextAnimator(),
+                                       textAnimator: LeftAndRightTextAnimator(),
                                        elementConfiguration: ElementConfiguration(numberOfElements: 1, bodySize: 15.0, memberSize: 9.0, keepToNextGeneration: true),
                                        behaviourManager: DefaultBehaviourManager(),
                                        colorizer: DefaultColorizer(),
@@ -14,7 +14,7 @@ struct ScriptConstants {
                                        textAnimator: MoveUpAndDownTextAnimator(),
                                        elementConfiguration: ElementConfiguration(numberOfElements: 0, bodySize: 15.0, memberSize: 9.0, keepToNextGeneration: true)),
         SingleSentenceScriptController(text: "But I can jump, tap on the screen and you’ll see!",
-                                       textAnimator: MoveUpAndDownTextAnimator(),
+                                       textAnimator: ScaleUpAndDownTextAnimator(),
                                        elementConfiguration: ElementConfiguration(numberOfElements: 0, bodySize: 15.0, memberSize: 9.0, keepToNextGeneration: true)),
         SingleSentenceScriptController(text: "That’s enough jumping… this is not a platform game.",
                                        textAnimator: MoveUpAndDownTextAnimator(),

@@ -47,33 +47,7 @@ public class LittlePersonBuilder {
         
         let numberOfMembers = self.calculateNumberOfMembers()
         for memberNumber in 0..<numberOfMembers {
-            
-            let currentAngleBetweenBodyAndMember = (2 * CGFloat.pi / CGFloat(numberOfMembers)) * CGFloat(memberNumber)
-        
-            let x_offset: CGFloat = 2 * distance * cos(currentAngleBetweenBodyAndMember)
-            let y_offset: CGFloat = 2 * distance * sin(currentAngleBetweenBodyAndMember)
-            
-            let point: SKSpriteNode = SKSpriteNode(color: UIColor.gray,
-                                                   size: self.memberSize)
-            point.position = CGPoint(x: x_offset,
-                                     y: y_offset)
-            
-            point.physicsBody = SKPhysicsBody(circleOfRadius: self.memberSize.height)
-            point.physicsBody?.isDynamic = true
-            point.physicsBody?.affectedByGravity = true
-            point.physicsBody?.mass = 1/3
-            
-            body.addChild(point)
-            
-            let joint = SKPhysicsJointSpring.joint(withBodyA: body.physicsBody!,
-                                                   bodyB: point.physicsBody!,
-                                                   anchorA: body.position,
-                                                   anchorB: body.position + point.position)
-            
-            joint.damping = 3
-            joint.frequency = 15
-            
-            self.scene?.physicsWorld.add(joint)
+            self.createMember(numberOfMembers: numberOfMembers, memberNumber: memberNumber, body: body)
         }
         
         return body
@@ -111,5 +85,32 @@ extension LittlePersonBuilder {
         body.physicsBody?.mass = 4.0
         
         return body
+    }
+    
+    private func createMember(numberOfMembers: Int, memberNumber: Int, body: SKSpriteNode) {
+        let currentAngleBetweenBodyAndMember = (2 * CGFloat.pi / CGFloat(numberOfMembers)) * CGFloat(memberNumber)
+        
+        let xOffset: CGFloat = 2 * distance * cos(currentAngleBetweenBodyAndMember)
+        let yOffset: CGFloat = 2 * distance * sin(currentAngleBetweenBodyAndMember)
+        
+        let point: SKSpriteNode = SKSpriteNode(color: UIColor.gray, size: self.memberSize)
+        point.position = CGPoint(x: xOffset, y: yOffset)
+        point.physicsBody = SKPhysicsBody(circleOfRadius: self.memberSize.height)
+        point.physicsBody?.isDynamic = true
+        point.physicsBody?.affectedByGravity = true
+        point.physicsBody?.mass = 1/3
+        body.addChild(point)
+        
+        if let bodyPB = body.physicsBody,
+           let pointPB = point.physicsBody {
+            let joint = SKPhysicsJointSpring.joint(withBodyA: bodyPB,
+                                                   bodyB: pointPB,
+                                                   anchorA: body.position,
+                                                   anchorB: body.position + point.position)
+            joint.damping = 3
+            joint.frequency = 15
+            
+            self.scene?.physicsWorld.add(joint)
+        }
     }
 }

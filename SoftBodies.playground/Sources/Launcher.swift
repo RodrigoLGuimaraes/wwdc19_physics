@@ -11,7 +11,7 @@ public class Launcher {
     }
     
     private func configure(scene: SKScene, debug: Bool = false) {
-        scene.scaleMode = .aspectFill
+        scene.scaleMode = .aspectFit
         sceneView.showsPhysics = debug
         sceneView.showsFPS = debug
         sceneView.showsDrawCount = debug

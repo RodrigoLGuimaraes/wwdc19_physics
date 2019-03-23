@@ -43,8 +43,6 @@ public class Launcher {
 
 extension Launcher: GameSceneDelegate {
     public func didFinishAllScriptForScene() {
-        print("time to put over")
-        
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.sceneView.bounds

@@ -2,6 +2,9 @@ import Foundation
 import SpriteKit
 
 public class RandomBehaviourManager: BehaviourManager {
+    
+    public init() {}
+    
     public func performBehavior(on behavers: [SKSpriteNode], given stimulusLocation: CGPoint) {
         behavers.forEach { (behaver) in
             let totalForce: CGFloat = 4000

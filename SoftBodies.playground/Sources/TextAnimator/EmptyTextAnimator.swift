@@ -1,8 +1,11 @@
 import Foundation
 import UIKit
 
-class EmptyTextAnimator: TextAnimator {
-    func animate(label: UILabel, labelConstraints: LabelConstraints, at time: TimeInterval) {
+public class EmptyTextAnimator: TextAnimator {
+    
+    public init() {}
+    
+    public func animate(label: UILabel, labelConstraints: LabelConstraints, at time: TimeInterval) {
         return
     }
 }

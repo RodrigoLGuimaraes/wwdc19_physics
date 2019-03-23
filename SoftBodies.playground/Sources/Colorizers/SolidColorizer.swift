@@ -5,7 +5,7 @@ public class SolidColorizer: Colorizer {
     
     private let color: SKColor
     
-    init(color: SKColor) {
+    public init(color: SKColor) {
         self.color = color
     }
     

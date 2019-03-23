@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class LeftAndRightTextAnimator: TextAnimator {
+public class LeftAndRightTextAnimator: TextAnimator {
     
     private var amplitude: CGFloat = 0
     private let duration: TimeInterval
@@ -11,7 +11,7 @@ class LeftAndRightTextAnimator: TextAnimator {
     var originalLeftMargin: CGFloat = LeftAndRightTextAnimator.invalidMargin
     var originalRightMargin: CGFloat = LeftAndRightTextAnimator.invalidMargin
     
-    init(duration: TimeInterval = 2) {
+    public init(duration: TimeInterval = 2) {
         self.duration = duration
     }
     
@@ -27,7 +27,7 @@ class LeftAndRightTextAnimator: TextAnimator {
         self.amplitude = abs(originalLeftMargin) + abs(originalRightMargin)
     }
     
-    func animate(label: UILabel, labelConstraints: LabelConstraints, at time: TimeInterval) {
+    public func animate(label: UILabel, labelConstraints: LabelConstraints, at time: TimeInterval) {
         self.saveOriginalMargins(labelConstraints: labelConstraints)
         
         let percentage = self.percentage(at: time, given: duration)

@@ -22,10 +22,8 @@ public class GameScene: SKScene {
     }
     
     private func nextScript(remainingNodes: [SKSpriteNode] = [SKSpriteNode]()) {
-        print("nextScript")
         guard var nextScript = self.scriptControllers.first,
               let skView = self.view else {
-            print("didFinishAll \(self.gameSceneDelegate)")
             self.gameSceneDelegate?.didFinishAllScriptForScene()
             return
         }

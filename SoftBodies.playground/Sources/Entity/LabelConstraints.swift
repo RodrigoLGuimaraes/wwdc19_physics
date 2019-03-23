@@ -1,12 +1,12 @@
 import Foundation
 import UIKit
 
-struct LabelConstraints {
+public struct LabelConstraints {
     var leftConstraint: NSLayoutConstraint
     var rightConstraint: NSLayoutConstraint
     var yConstraint: NSLayoutConstraint
     
-    init(leftConstraint: NSLayoutConstraint,
+    public init(leftConstraint: NSLayoutConstraint,
          rightConstraint: NSLayoutConstraint,
          yConstraint: NSLayoutConstraint) {
         self.leftConstraint = leftConstraint

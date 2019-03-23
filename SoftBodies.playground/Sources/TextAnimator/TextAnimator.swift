@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-protocol TextAnimator {
+public protocol TextAnimator {
     func animate(label: UILabel, labelConstraints: LabelConstraints, at time: TimeInterval)
 }
 

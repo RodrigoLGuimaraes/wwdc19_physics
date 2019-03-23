@@ -2,8 +2,8 @@ import Foundation
 import UIKit
 import SpriteKit
 
-class SingleSentenceScriptController: ScriptController {
-    weak var delegate: ScriptControllerDelegate?
+public class SingleSentenceScriptController: ScriptController {
+    public weak var delegate: ScriptControllerDelegate?
     
     private let text: String
     private let textAnimator: TextAnimator
@@ -12,21 +12,21 @@ class SingleSentenceScriptController: ScriptController {
     private let fadeTime: TimeInterval
     private let timeToRead: TimeInterval
     
-    var behaviourManager: BehaviourManager
-    var colorizer: Colorizer
+    public var behaviourManager: BehaviourManager
+    public var colorizer: Colorizer
     
     private var view: SKView?
     private var mainLabel: UILabel?
     private var labelConstrains: LabelConstraints?
     private var targetElements = [SKSpriteNode]()
     
-    init(text: String,
-         textAnimator: TextAnimator,
-         elementConfiguration: ElementConfiguration,
-         behaviourManager: BehaviourManager = DefaultBehaviourManager(),
-         colorizer: Colorizer = DefaultColorizer(),
-         startDelay: TimeInterval = 0,
-         fadeTime: TimeInterval = 1.5) {
+    public init(text: String,
+                textAnimator: TextAnimator,
+                elementConfiguration: ElementConfiguration,
+                behaviourManager: BehaviourManager,
+                colorizer: Colorizer,
+                startDelay: TimeInterval = 0,
+                fadeTime: TimeInterval = 1.5) {
         self.text = text
         self.textAnimator = textAnimator
         self.elementConfiguration = elementConfiguration
@@ -37,14 +37,14 @@ class SingleSentenceScriptController: ScriptController {
         self.timeToRead = ScriptControllerUtils.calculateTime(toRead: text, with: ReadSpeed.regular)
     }
     
-    func initialize(view: SKView, remainingNodes: [SKSpriteNode]) {
+    public func initialize(view: SKView, remainingNodes: [SKSpriteNode]) {
         self.view = view
         self.targetElements = remainingNodes
         self.createMainLabel()
         self.createSubParticles()
     }
     
-    func updateScript(at time: TimeInterval) {
+    public func updateScript(at time: TimeInterval) {
         self.colorizer.updateColor(self.targetElements, at: time)
         
         guard let labelConstraints = self.labelConstrains,
@@ -71,11 +71,11 @@ class SingleSentenceScriptController: ScriptController {
         label.alpha = alpha
     }
     
-    func performBehaviour(given touchLocation: CGPoint) {
+    public func performBehaviour(given touchLocation: CGPoint) {
         self.behaviourManager.performBehavior(on: self.targetElements, given: touchLocation)
     }
     
-    func finish() {
+    private func finish() {
         self.mainLabel?.alpha = 0
         self.mainLabel?.removeFromSuperview()
         
